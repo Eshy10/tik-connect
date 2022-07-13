@@ -4,10 +4,12 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { AiFillHome, AiOutlineMenu } from "react-icons/ai";
 import { ImCancelCircle } from "react-icons/im";
-
-const showSidebar = false;
+import Discover from "./Discover";
+import Footer from "./Footer";
+import SuggestedAccounts from "./SuggestedAccounts";
 
 const Sidebar: NextPage = () => {
+  const [showSidebar, setShowSidebar] = useState<boolean>(true);
   const { pathname } = useRouter();
 
   const activeLink =
@@ -17,7 +19,9 @@ const Sidebar: NextPage = () => {
     "flex items-center gap-3 hover:bg-primary p-3 justify-center xl:justify-start cursor-pointer font-semibold rounded";
   return (
     <div>
-      <div className="block xl:hidden m-2 ml-4 mt-3 text-xl">
+      <div className="block xl:hidden m-2 ml-4 mt-3 text-xl"
+        onClick={() => setShowSidebar(!showSidebar)}
+      >
         {showSidebar ? <ImCancelCircle /> : <AiOutlineMenu />}
       </div>
       {showSidebar && (
@@ -34,6 +38,9 @@ const Sidebar: NextPage = () => {
               </div>
             </Link>
           </div>
+          <Discover />
+          <SuggestedAccounts/>
+          <Footer />
         </div>
       )}
     </div>
