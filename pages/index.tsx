@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import axios from "axios";
 import { Video } from "../types";
 import VideoCard from "../components/VideoCard";
+import NoResult from "../components/NoResult";
 
 interface IProps {
   videos: Video[];
@@ -14,7 +15,7 @@ const Home = ({ videos }: IProps) => {
       {videos.length ? (
         videos.map((video) => <VideoCard key={video._id} video={video} />)
       ) : (
-        <p>No videos found</p>
+        <NoResult text="No videos found" />
       )}
     </div>
   );
