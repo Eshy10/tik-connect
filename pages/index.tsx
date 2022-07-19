@@ -8,12 +8,12 @@ interface IProps {
   videos: Video[];
 }
 
-const Home = ({ videos }: IProps) => {
+const Home: NextPage<IProps> = ({ videos }) => {
   console.log(videos);
   return (
     <div className="flex flex-col gap-10 videos h-full">
       {videos.length ? (
-        videos.map((video) => <VideoCard key={video._id} video={video} />)
+        videos.map((video) => <VideoCard key={video._id} post={video} />)
       ) : (
         <NoResult text="No videos found" />
       )}
