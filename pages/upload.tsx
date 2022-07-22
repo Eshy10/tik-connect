@@ -78,6 +78,13 @@ const Upload = () => {
     }
   };
 
+  const handleDiscard = () => {
+    setSavingPost(false);
+    setVideoAsset(undefined);
+    setCaption('');
+    setTopic('');
+  };
+
   const showVideoAsset = () => {
     if (videoAsset) {
       return (
@@ -185,7 +192,7 @@ const Upload = () => {
           </select>
           <div className="flex gap-6 mt-10">
             <button
-              onClick={}
+              onClick={handleDiscard}
               type="button"
               className="border-gray-300 border-2 text-md font-medium p-2 rounded w-28 lg:w-44 outline-none"
             >
