@@ -48,6 +48,34 @@ const Upload = () => {
     }
   };
 
+  const handlePost = async () => {
+    if (caption && videoAsset?._id && topic) {
+      setSavingPost(true);
+
+      const doc = {
+        _type: 'post',
+        caption,
+        video: {
+          _type: 'file',
+          asset: {
+            _type: 'reference',
+            _ref: videoAsset?._id,
+          },
+        },
+        userId: userProfile?._id,
+        postedBy: {
+          _type: 'postedBy',
+          _ref: userProfile?._id,
+        },
+        topic,
+      };
+
+      await axios.post(`http://localhost:3000/api/post`, doc);
+        
+      router.push('/');
+    }
+  };
+
 
   return (
     <div className='flex w-full h-full absolute left-0 top-[60px] lg:top-[70px] mb-10 pt-10 lg:pt-20 bg-[#F8F8F8] justify-center'>
@@ -158,7 +186,7 @@ const Upload = () => {
             </button>
             <button
               disabled={videoAsset?.url ? false : true}
-              onClick={}
+              onClick={handlePost}
               type='button'
               className='bg-[#F51997] text-white text-md font-medium p-2 rounded w-28 lg:w-44 outline-none'
             >
