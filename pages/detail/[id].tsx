@@ -17,6 +17,27 @@ const Details = () => {
   const [isPostingComment, setIsPostingComment] = useState<boolean>(false);
   const [comment, setComment] = useState<string>("");
 
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const router = useRouter();
+
+  const { userProfile }: any = useAuthStore();
+
+  const onVideoClick = () => {
+    if (isPlaying) {
+      videoRef?.current?.pause();
+      setIsPlaying(false);
+    } else {
+      videoRef?.current?.play();
+      setIsPlaying(true);
+    }
+  };
+
+  useEffect(() => {
+    if (videoRef?.current) {
+      videoRef.current.muted = isVideoMuted;
+    }
+  }, [isVideoMuted]);
+
   return (
     <div className="flex w-full absolute left-0 top-0 bg-white flex-wrap lg:flex-nowrap">
       <div className="relative flex-2 w-[1000px] lg:w-9/12 flex justify-center items-center bg-blurred-img bg-no-repeat bg-cover bg-center">
@@ -28,7 +49,8 @@ const Details = () => {
         <div className="relative">
           <div className="lg:h-[100vh] h-[60vh]">
             <video
-              onClick={() => {}}
+              ref={videoRef}
+              onClick={onVideoClick}
               loop
               src={""}
               className=" h-full cursor-pointer"
@@ -37,7 +59,7 @@ const Details = () => {
 
           <div className="absolute top-[45%] left-[40%]  cursor-pointer">
             {!isPlaying && (
-              <button onClick={() => {}}>
+              <button title="play"  onClick={onVideoClick}>
                 <BsFillPlayFill className="text-white text-6xl lg:text-8xl" />
               </button>
             )}
@@ -45,11 +67,11 @@ const Details = () => {
         </div>
         <div className="absolute bottom-5 lg:bottom-10 right-5 lg:right-10  cursor-pointer">
           {isVideoMuted ? (
-            <button onClick={() => setIsVideoMuted(false)}>
+            <button title="volumeDown"  onClick={() => setIsVideoMuted(false)}>
               <HiVolumeOff className="text-white text-3xl lg:text-4xl" />
             </button>
           ) : (
-            <button onClick={() => setIsVideoMuted(true)}>
+            <button title="volumeUp" onClick={() => setIsVideoMuted(true)}>
               <HiVolumeUp className="text-white text-3xl lg:text-4xl" />
             </button>
           )}
@@ -77,8 +99,7 @@ const Details = () => {
           <div className="px-10">
             <p className=" text-md text-gray-600"></p>
           </div>
-          <div className="mt-10 px-10">
-          </div>
+          <div className="mt-10 px-10"></div>
         </div>
       </div>
     </div>
