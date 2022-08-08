@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import axios from "axios";
 import { Video } from "../types";
-import { BASE_URL } from '../utils';
+import { BASE_URL } from "../utils";
 import VideoCard from "../components/VideoCard";
 import NoResult from "../components/NoResult";
 
@@ -22,9 +22,20 @@ const Home: NextPage<IProps> = ({ videos }) => {
   );
 };
 
-export const getServerSideProps = async () => {
-  const { data } = await axios.get(`${BASE_URL}/api/post`);
-  return { props: { videos: data } };
+export const getServerSideProps = async ({
+  query: { topic },
+}: {
+  query: { topic: string };
+}) => {
+  let response = await axios.get(`${BASE_URL}/api/post`);
+
+  if (topic) {
+    response = await axios.get(`${BASE_URL}/api/discover/${topic}`);
+  }
+
+  return {
+    props: { videos: response.data },
+  };
 };
 
 export default Home;
