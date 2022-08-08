@@ -21,6 +21,16 @@ const Search = ({ videos }: { videos: Video[] }) => {
   const accounts = isAccounts ? 'border-b-2 border-black' : 'text-gray-400';
   const isVideos = !isAccounts ? 'border-b-2 border-black' : 'text-gray-400';
   const searchedAccounts = allUsers?.filter((user: IUser) => user.userName.toLowerCase().includes(searchTerm));
+
+  const showVideos = () => {
+    if (videos.length > 0) {
+      return videos.map((post: Video, idx: number) => (
+        <VideoCard post={post} key={idx} />
+      ));
+    } else {
+      return <NoResults text={`No Video Results for ${searchTerm}`} />;
+    }
+  }
   
   return (
     <div className='w-full  '>
@@ -60,13 +70,7 @@ const Search = ({ videos }: { videos: Video[] }) => {
         </div>
       ) : (
         <div className='md:mt-16 flex flex-wrap gap-6 md:justify-start '>
-          {videos.length ? (
-            videos.map((post: Video, idx: number) => (
-              <VideoCard post={post} key={idx} />
-            ))
-          ) : (
-            <NoResults text={`No Video Results for ${searchTerm}`} />
-          )}
+            {showVideos()}
         </div>
       )}
     </div>
