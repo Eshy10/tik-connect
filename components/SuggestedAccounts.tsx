@@ -18,8 +18,7 @@ const SuggestedAccounts = ({
     fetchAllUsers();
   }, [fetchAllUsers]);
 
-  const users = allUsers
-    .sort(() => 0.5 - Math.random())
+  const users = allUsers?.sort(() => 0.5 - Math.random())
     .slice(0, allUsers.length);
 
   return (
