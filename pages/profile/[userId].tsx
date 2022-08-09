@@ -91,6 +91,7 @@ export const getServerSideProps = async ({
   params: { userId: string };
 }) => {
   const res = await axios.get(`${BASE_URL}/api/profile/${userId}`);
+  console.log(res.data);
 
   return {
     props: { data: res.data },
